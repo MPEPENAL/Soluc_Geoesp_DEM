@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:17, minZoom:12
+        }).fitBounds([[-24.287312947210317,-65.13667109357087],[-24.274453589513165,-65.12102893300035]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href=" https://leafletjs.com" target="_blank">Marcelo Pepenal</a> &middot; <a href="https://www.soluciones-geoespaciales.com.ar/ " title="A JS library for interactive maps">Soluciones Geoespaciales</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_ESRISATELITE_0');
+        map.getPane('pane_ESRISATELITE_0').style.zIndex = 400;
+        var layer_ESRISATELITE_0 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            pane: 'pane_ESRISATELITE_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 12,
+            maxZoom: 17,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_ESRISATELITE_0;
+        map.addLayer(layer_ESRISATELITE_0);
+        map.createPane('pane_DEM5CM_1');
+        map.getPane('pane_DEM5CM_1').style.zIndex = 401;
+        var img_DEM5CM_1 = 'data/DEM5CM_1.png';
+        var img_bounds_DEM5CM_1 = [[-24.285410820986723,-65.13553035097091],[-24.275227855513315,-65.12518889242497]];
+        var layer_DEM5CM_1 = new L.imageOverlay(img_DEM5CM_1,
+                                              img_bounds_DEM5CM_1,
+                                              {pane: 'pane_DEM5CM_1'});
+        bounds_group.addLayer(layer_DEM5CM_1);
+        map.addLayer(layer_DEM5CM_1);
+        map.createPane('pane_DEM5MTS_2');
+        map.getPane('pane_DEM5MTS_2').style.zIndex = 402;
+        var img_DEM5MTS_2 = 'data/DEM5MTS_2.png';
+        var img_bounds_DEM5MTS_2 = [[-24.284484257979617,-65.13359105428938],[-24.276725049382584,-65.12639855015551]];
+        var layer_DEM5MTS_2 = new L.imageOverlay(img_DEM5MTS_2,
+                                              img_bounds_DEM5MTS_2,
+                                              {pane: 'pane_DEM5MTS_2'});
+        bounds_group.addLayer(layer_DEM5MTS_2);
+        map.createPane('pane_DEM125MTS_3');
+        map.getPane('pane_DEM125MTS_3').style.zIndex = 403;
+        var img_DEM125MTS_3 = 'data/DEM125MTS_3.png';
+        var img_bounds_DEM125MTS_3 = [[-24.28453840248149,-65.13366837037817],[-24.27668477971559,-65.12629720643464]];
+        var layer_DEM125MTS_3 = new L.imageOverlay(img_DEM125MTS_3,
+                                              img_bounds_DEM125MTS_3,
+                                              {pane: 'pane_DEM125MTS_3'});
+        bounds_group.addLayer(layer_DEM125MTS_3);
+        map.createPane('pane_DEM30MTS_4');
+        map.getPane('pane_DEM30MTS_4').style.zIndex = 404;
+        var img_DEM30MTS_4 = 'data/DEM30MTS_4.png';
+        var img_bounds_DEM30MTS_4 = [[-24.28428823707609,-65.13355197553966],[-24.276882180667638,-65.12663596773824]];
+        var layer_DEM30MTS_4 = new L.imageOverlay(img_DEM30MTS_4,
+                                              img_bounds_DEM30MTS_4,
+                                              {pane: 'pane_DEM30MTS_4'});
+        bounds_group.addLayer(layer_DEM30MTS_4);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{"DEM 30 MTS": layer_DEM30MTS_4,"DEM 12,5 MTS": layer_DEM125MTS_3,"DEM 5 MTS": layer_DEM5MTS_2,"DEM 5 CM": layer_DEM5CM_1,"ESRI SATELITE": layer_ESRISATELITE_0,},{collapsed:false}).addTo(map);L.control.scale({position: 'bottomleft', maxWidth: 100, metric: true, imperial: false, updateWhenIdle: false}).addTo(map);
+        setBounds();
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        </script>
+    </body>
+</html>
